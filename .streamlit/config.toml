@@ -1,0 +1,26 @@
+# No "base" is set, so the app follows the viewer's system light/dark setting.
+[theme]
+font = "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+headingFont = "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+baseRadius = "0.75rem"
+buttonRadius = "full"
+
+[theme.light]
+primaryColor = "#0071E3"
+backgroundColor = "#F5F5F7"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1D1D1F"
+borderColor = "#E5E5EA"
+
+[theme.dark]
+primaryColor = "#0A84FF"
+backgroundColor = "#000000"
+secondaryBackgroundColor = "#1C1C1E"
+textColor = "#F5F5F7"
+borderColor = "#38383A"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

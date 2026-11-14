@@ -1,0 +1,7 @@
+streamlit>=1.67.0
+plotly>=5.20.0
+folium>=0.20.0
+streamlit-folium>=0.27.0
+pandas>=2.2.0
+numpy>=2.0.0
+branca>=0.8.0
