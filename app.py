@@ -674,8 +674,7 @@ how much the ranking depends on the chosen weights.
 **1. Analog score.** Each site has a 0–100 score on {len(criteria_list)} criteria (higher means a closer
 match to {target}). The Analog Score is the weighted sum:
 
-$$\\text{{AnalogScore}} = \\sum_{{i=1}}^{{N}} \\text{{Normalized}}_i \\times \\text{{Weight}}_i
-\\qquad \\sum_{{i=1}}^{{N}} \\text{{Weight}}_i = 1$$
+$$\\text{{AnalogScore}} = \\sum_{{i=1}}^{{N}} \\text{{Normalized}}_i \\times \\text{{Weight}}_i, \\qquad \\sum_{{i=1}}^{{N}} \\text{{Weight}}_i = 1$$
 
 The default weights are the baseline from the NASA challenge guide. As a check, the guide's worked example
 (scores 85, 90, 70, 80, 75, 60, 50, 80) gives 75.5, which is covered by a unit test.
