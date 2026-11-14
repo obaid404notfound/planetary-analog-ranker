@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#141E30" />
+      <stop offset="70%" stop-color="#0B132B" />
+      <stop offset="100%" stop-color="#050811" />
+    </radialGradient>
+    
+    <linearGradient id="earthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0071E3" />
+      <stop offset="100%" stop-color="#0A84FF" />
+    </linearGradient>
+
+    <linearGradient id="marsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF5A1F" />
+      <stop offset="100%" stop-color="#C0392B" />
+    </linearGradient>
+
+    <linearGradient id="moonGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8E8E93" />
+      <stop offset="100%" stop-color="#F5F5F7" />
+    </linearGradient>
+
+    <linearGradient id="orbitGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0A84FF" stop-opacity="0.1" />
+      <stop offset="60%" stop-color="#00F5D4" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1" />
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Circular Patch Background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGlow)" stroke="#1F2A44" stroke-width="4" />
+  
+  <!-- Outer 8-Axis Radar / Evaluation Ring (8 criteria) -->
+  <circle cx="256" cy="256" r="215" fill="none" stroke="#2C3E50" stroke-width="1.5" stroke-dasharray="4,8" opacity="0.6" />
+  <circle cx="256" cy="256" r="185" fill="none" stroke="#2C3E50" stroke-width="1" opacity="0.4" />
+  
+  <!-- 8 Evaluation Radar Nodes -->
+  <g fill="#0A84FF" opacity="0.8">
+    <circle cx="256" cy="41" r="4.5" />
+    <circle cx="408" cy="104" r="4.5" />
+    <circle cx="471" cy="256" r="4.5" />
+    <circle cx="408" cy="408" r="4.5" />
+    <circle cx="256" cy="471" r="4.5" />
+    <circle cx="104" cy="408" r="4.5" />
+    <circle cx="41" cy="256" r="4.5" />
+    <circle cx="104" cy="104" r="4.5" />
+  </g>
+
+  <!-- Central Split Sphere: Earth Analog (Left) & Destination Planetary Worlds (Right) -->
+  <g transform="translate(0, -10)">
+    <!-- Clip path for left hemisphere (Earth) -->
+    <clipPath id="leftHemisphere">
+      <path d="M 256,126 A 130,130 0 0,0 256,386 Z" />
+    </clipPath>
+    <!-- Clip path for top right quadrant (Moon South Pole) -->
+    <clipPath id="topRightQuad">
+      <path d="M 256,126 A 130,130 0 0,1 386,256 L 256,256 Z" />
+    </clipPath>
+    <!-- Clip path for bottom right quadrant (Mars) -->
+    <clipPath id="bottomRightQuad">
+      <path d="M 256,256 L 386,256 A 130,130 0 0,1 256,386 Z" />
+    </clipPath>
+
+    <!-- Base Shadow Sphere -->
+    <circle cx="256" cy="256" r="130" fill="#0E1626" />
+
+    <!-- Left Hemisphere: Earth Analog & Topographic Contour Lines -->
+    <g clip-path="url(#leftHemisphere)">
+      <circle cx="256" cy="256" r="130" fill="url(#earthGrad)" opacity="0.25" />
+      <!-- Elevation contour lines -->
+      <path d="M 256,150 Q 180,180 160,256 T 256,360" fill="none" stroke="#0A84FF" stroke-width="2.5" opacity="0.7" />
+      <path d="M 256,180 Q 200,210 190,256 T 256,330" fill="none" stroke="#00F5D4" stroke-width="2" opacity="0.8" />
+      <path d="M 256,210 Q 220,230 215,256 T 256,300" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" />
+      <!-- Terrestrial Pin / Sensor Marker (McMurdo / Field Point) -->
+      <circle cx="215" cy="256" r="5" fill="#00F5D4" filter="url(#glow)" />
+      <circle cx="215" cy="256" r="12" fill="none" stroke="#00F5D4" stroke-width="1.5" opacity="0.7" />
+    </g>
+
+    <!-- Top-Right: Moon South Pole (Craters & Regolith) -->
+    <g clip-path="url(#topRightQuad)">
+      <circle cx="256" cy="256" r="130" fill="url(#moonGrad)" opacity="0.2" />
+      <!-- Lunar Craters (Shackleton / Malapert analog) -->
+      <circle cx="310" cy="190" r="18" fill="none" stroke="#D1D1D6" stroke-width="2" />
+      <circle cx="310" cy="190" r="6" fill="#8E8E93" opacity="0.5" />
+      <circle cx="345" cy="230" r="11" fill="none" stroke="#AEAEB2" stroke-width="1.5" />
+      <circle cx="285" cy="165" r="9" fill="none" stroke="#AEAEB2" stroke-width="1.5" />
+    </g>
+
+    <!-- Bottom-Right: Mars Surface (Oxidized Dunes & Canyons) -->
+    <g clip-path="url(#bottomRightQuad)">
+      <circle cx="256" cy="256" r="130" fill="url(#marsGrad)" opacity="0.3" />
+      <!-- Martian Wind / Ridge Striations -->
+      <path d="M 256,280 Q 310,270 375,290" fill="none" stroke="#FF5A1F" stroke-width="2.5" opacity="0.8" />
+      <path d="M 256,310 Q 320,305 365,335" fill="none" stroke="#FF5A1F" stroke-width="2" opacity="0.7" />
+      <path d="M 256,345 Q 300,340 340,365" fill="none" stroke="#C0392B" stroke-width="2" opacity="0.6" />
+    </g>
+
+    <!-- Central Meridian Separator -->
+    <line x1="256" y1="126" x2="256" y2="386" stroke="#FFFFFF" stroke-width="2" opacity="0.3" stroke-dasharray="3,3" />
+
+    <!-- Trajectory Vector: From Earth Analog through Moon to Mars -->
+    <path d="M 195,280 C 170,160 300,100 370,140 C 420,170 415,260 355,305" 
+          fill="none" stroke="url(#orbitGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)" />
+    <!-- Exploration Vector Chevron (Artemis Arrowhead) -->
+    <polygon points="358,300 340,314 348,295" fill="#FFFFFF" filter="url(#glow)" />
+  </g>
+
+  <!-- Typography / Badge Text -->
+  <text x="256" y="435" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="20" font-weight="800" letter-spacing="5" fill="#F5F5F7">PLANETARY ANALOG</text>
+  <text x="256" y="458" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" 
+        font-size="12" font-weight="600" letter-spacing="4" fill="#0A84FF">RANKER &amp; OPTIMIZER</text>
+</svg>
