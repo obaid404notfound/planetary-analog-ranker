@@ -1,6 +1,10 @@
 # Planetary Analog Ranker & Portfolio Optimizer
 ### A Decision-Support Engine for Lunar South Pole (Artemis) & Mars Exploration Testing
 
+<p align="center">
+  <img src="assets/mission_patch.jpg" alt="Planetary Analog Ranker Mission Patch" width="280">
+</p>
+
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit App](https://img.shields.io/badge/Streamlit-1.67+-FF4B4B.svg)](https://streamlit.io/)
 [![Folium](https://img.shields.io/badge/Geospatial-Folium-brightgreen.svg)](https://python-visualization.github.io/folium/)

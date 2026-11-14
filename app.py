@@ -34,12 +34,15 @@ from presets import (
 from data.site_details import SITE_METADATA, SITE_PHYSICAL_MEASUREMENTS
 
 
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+PATCH_PATH = os.path.join(APP_DIR, "assets", "mission_patch.jpg")
+
 # ---------------------------------------------------------
 # Page configuration and styling
 # ---------------------------------------------------------
 st.set_page_config(
     page_title="Planetary Analog Ranker",
-    page_icon=":material/public:",
+    page_icon=PATCH_PATH if os.path.exists(PATCH_PATH) else ":material/public:",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -444,6 +447,9 @@ if st.session_state.pop("apply_theme", False):
 # ---------------------------------------------------------
 # Sidebar controls
 # ---------------------------------------------------------
+if os.path.exists(PATCH_PATH):
+    st.sidebar.image(PATCH_PATH, width="stretch")
+
 st.sidebar.radio(
     "Appearance",
     options=list(THEME_CHOICES.keys()),
