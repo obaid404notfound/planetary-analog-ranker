@@ -6,6 +6,7 @@ stable the ranking is when the criterion weights change.
 """
 
 from typing import Dict, List, Tuple
+import base64
 import html
 import math
 import os
@@ -36,6 +37,14 @@ from data.site_details import SITE_METADATA, SITE_PHYSICAL_MEASUREMENTS
 
 APP_DIR = os.path.dirname(os.path.abspath(__file__))
 PATCH_PATH = os.path.join(APP_DIR, "assets", "mission_patch.jpg")
+HEADER_PATCH_PATH = os.path.join(APP_DIR, "assets", "header_patch.jpg")
+if not os.path.exists(HEADER_PATCH_PATH) and os.path.exists(PATCH_PATH):
+    HEADER_PATCH_PATH = PATCH_PATH
+
+B64_LOGO = ""
+if os.path.exists(HEADER_PATCH_PATH):
+    with open(HEADER_PATCH_PATH, "rb") as f:
+        B64_LOGO = base64.b64encode(f.read()).decode("utf-8")
 
 # ---------------------------------------------------------
 # Page configuration and styling
@@ -104,6 +113,16 @@ st.markdown(
         [data-testid="stSidebar"] h3 { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; }
 
         /* Header */
+        .header-banner {
+            display: flex; flex-direction: row; align-items: center; gap: 22px; margin-bottom: 0.8rem;
+        }
+        .main-header-logo {
+            width: 88px; height: 88px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+            box-shadow: 0 6px 24px var(--shadow), 0 0 0 2px var(--line);
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .main-header-logo:hover { transform: scale(1.06); }
+        .header-titles { display: flex; flex-direction: column; }
         .eyebrow { font-size: 0.95rem; font-weight: 600; color: var(--muted); margin-bottom: 0.2rem; }
         .page-title {
             font-size: 3rem; font-weight: 700; line-height: 1.07; letter-spacing: -0.022em;
@@ -264,6 +283,47 @@ st.markdown(
         /* ---------- Hero and summary tiles ---------- */
         .hero-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
         @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .block-container {
+                padding-top: 1.8rem !important; padding-left: 0.85rem !important;
+                padding-right: 0.85rem !important; padding-bottom: 2rem !important;
+            }
+            .header-banner { gap: 16px; margin-bottom: 0.6rem; }
+            .main-header-logo { width: 72px; height: 72px; }
+            .eyebrow { font-size: 0.82rem; }
+            .page-title { font-size: 1.85rem !important; line-height: 1.15 !important; }
+            .page-sub { font-size: 1.05rem !important; line-height: 1.35 !important; margin: 0.4rem 0 1rem 0 !important; }
+            .hero-grid { gap: 10px !important; }
+            .tile.hero { padding: 16px 18px !important; gap: 14px !important; }
+            .hero-name { font-size: 1.55rem !important; }
+            .ring, .ring-wrap { width: 88px !important; height: 88px !important; }
+            .ring-num { font-size: 1.35rem !important; }
+            .ring-cap { font-size: 0.65rem !important; }
+            .rank-list { height: 380px !important; }
+            .rank-row {
+                grid-template-columns: 24px minmax(0, 1.8fr) minmax(40px, 0.9fr) 34px !important;
+                gap: 8px !important; padding: 6px 8px !important;
+            }
+            .rank-name { font-size: 0.85rem !important; }
+            .rank-sub { font-size: 0.72rem !important; }
+            .rank-score { font-size: 0.82rem !important; }
+            [role="tablist"] {
+                display: flex !important; overflow-x: auto !important; max-width: 100% !important;
+                white-space: nowrap !important; -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+            }
+            [role="tablist"]::-webkit-scrollbar { display: none !important; }
+            [data-testid="stTab"] {
+                padding: 6px 14px !important; font-size: 0.82rem !important; flex-shrink: 0 !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .header-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .main-header-logo { width: 64px; height: 64px; }
+            .page-title { font-size: 1.6rem !important; }
+            .tile.hero { flex-direction: column; align-items: flex-start; }
+            .ring-wrap { align-self: center; margin-top: 10px; }
+        }
         .tile { display: flex; flex-direction: column; }
         .tile.hero { flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 26px; }
         .hero-name { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; color: var(--ink); margin-top: 0.3rem; }
@@ -643,10 +703,15 @@ top_site_name = top_site["site_name"]
 profile_label = "NASA baseline" if active_profile == BASELINE_PRESET else active_profile
 top_meta = find_metadata(top_site["site_name"])
 top_where = top_site["country"] + (" &middot; " + html.escape(top_meta["climate_zone"]) if top_meta else "")
+logo_html = f'<img src="data:image/jpeg;base64,{B64_LOGO}" class="main-header-logo" alt="Planetary Analog Ranker Mission Patch">' if B64_LOGO else ""
 st.html(
+    '<div class="header-banner">'
+    f'{logo_html}'
+    '<div class="header-titles">'
     '<div class="eyebrow">Planetary Analog Ranker</div>'
     f'<h1 class="page-title">{target} analog sites.</h1>'
     f'<p class="page-sub">{target_subtitle}</p>'
+    '</div></div>'
     '<div class="hero-grid">'
     '<div class="tile hero"><div>'
     '<div class="tile-label">Top-ranked site</div>'
