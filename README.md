@@ -1,8 +1,8 @@
-# Planetary Analog Ranker & Portfolio Optimizer
+# SubZero: Planetary Analog Ranker & Portfolio Optimizer
 ### A Decision-Support Engine for Lunar South Pole (Artemis) & Mars Exploration Testing
 
 <p align="center">
-  <img src="assets/mission_patch.jpg" alt="Planetary Analog Ranker Mission Patch" width="280">
+  <img src="assets/mission_patch.jpg" alt="SubZero Planetary Analog Ranker Mission Patch" width="280">
 </p>
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -20,7 +20,7 @@ Before sending astronauts and multimillion-dollar rovers to the **Lunar South Po
 - Shield volcanoes and lava fields provide authentic basaltic regolith and subterranean lava tube caverns, but lack cryogenic cold traps and polar illumination.
 - Subtropical hyper-arid deserts feature perchlorates and extreme UV, but lack cryogenic freeze-thaw extremes.
 
-The **Planetary Analog Ranker** solves this fundamental mission planning bottleneck by:
+The **SubZero** Planetary Analog Ranker solves this fundamental mission planning bottleneck by:
 1. **Multi-Criteria Analog Scoring**: A weighted $0-100$ scoring engine per site across $8$ key planetary environmental parameters, with user-tunable sliders, operational mission presets, and ground-truth physical observation notes.
 2. **Greedy Analog Portfolio Finder**: A submodular optimization algorithm that selects a complementary team of $2-3$ Earth test sites to collectively maximize condition coverage and spotlight remaining test deficits.
 3. **Dirichlet Monte Carlo Stability Analysis**: A $1,000$-run perturbation simulation that proves which sites are robust against subjective weight variations (with selectable Top-3, Top-5, and Top-10 cutoff tiers).
@@ -263,7 +263,7 @@ The app opens at http://localhost:8501.
 
 | Timestamp | Section | Key Visuals & Talking Points |
 | :--- | :--- | :--- |
-| **0:00 – 0:05** | **Introduction** | *"We are team [Name], presenting the Planetary Analog Ranker & Portfolio Optimizer."* Show mission patch and dashboard. |
+| **0:00 – 0:05** | **Introduction** | *"We are team SubZero, presenting SubZero: the Planetary Analog Ranker & Portfolio Optimizer."* Show mission patch and dashboard. |
 | **0:05 – 0:12** | **The Bottleneck** | *"Testing Artemis and Mars equipment across mismatched Earth environments risks catastrophic mission failure."* |
 | **0:12 – 0:22** | **The Engine & Optimization** | *"Our platform ingests NASA SRTM, CERES, and ERA5 data to score sites across 8 planetary criteria, then uses submodular greedy optimization to select complementary multi-site test portfolios that eliminate critical test gaps."* Show live map & Tab 3 portfolio solver. |
 | **0:22 – 0:30** | **Validation & Impact** | *"Backed by 1,000 Dirichlet Monte Carlo simulations, we're replacing subjective expedition planning with data-driven science."* |

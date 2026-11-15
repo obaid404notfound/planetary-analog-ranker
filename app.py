@@ -50,7 +50,7 @@ if os.path.exists(HEADER_PATCH_PATH):
 # Page configuration and styling
 # ---------------------------------------------------------
 st.set_page_config(
-    page_title="Planetary Analog Ranker",
+    page_title="SubZero | Planetary Analog Ranker",
     page_icon=PATCH_PATH if os.path.exists(PATCH_PATH) else ":material/public:",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -123,7 +123,17 @@ st.markdown(
         }
         .main-header-logo:hover { transform: scale(1.06); }
         .header-titles { display: flex; flex-direction: column; }
-        .eyebrow { font-size: 0.95rem; font-weight: 600; color: var(--muted); margin-bottom: 0.2rem; }
+        .eyebrow {
+            font-size: 0.95rem; font-weight: 700; color: var(--muted); margin-bottom: 0.25rem;
+            display: flex; flex-direction: row; align-items: center; gap: 8px; flex-wrap: wrap;
+        }
+        .subzero-tag {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.2), rgba(0, 245, 212, 0.16));
+            color: var(--accent); border: 1px solid rgba(10, 132, 255, 0.4);
+            padding: 2px 9px; border-radius: 6px; font-weight: 800; font-size: 0.78rem;
+            letter-spacing: 0.08em; text-transform: uppercase;
+        }
         .page-title {
             font-size: 3rem; font-weight: 700; line-height: 1.07; letter-spacing: -0.022em;
             color: var(--ink); margin: 0; padding: 0;
@@ -509,6 +519,12 @@ if st.session_state.pop("apply_theme", False):
 # ---------------------------------------------------------
 if os.path.exists(PATCH_PATH):
     st.sidebar.image(PATCH_PATH, width="stretch")
+    st.sidebar.html(
+        '<div style="text-align: center; margin-top: -6px; margin-bottom: 12px;">'
+        '<div style="font-size: 1.15rem; font-weight: 800; letter-spacing: 0.08em; color: var(--ink);">SUBZERO</div>'
+        '<div style="font-size: 0.76rem; color: var(--muted); letter-spacing: 0.02em;">Planetary Analog Ranker</div>'
+        '</div>'
+    )
 
 st.sidebar.radio(
     "Appearance",
@@ -703,12 +719,12 @@ top_site_name = top_site["site_name"]
 profile_label = "NASA baseline" if active_profile == BASELINE_PRESET else active_profile
 top_meta = find_metadata(top_site["site_name"])
 top_where = top_site["country"] + (" &middot; " + html.escape(top_meta["climate_zone"]) if top_meta else "")
-logo_html = f'<img src="data:image/jpeg;base64,{B64_LOGO}" class="main-header-logo" alt="Planetary Analog Ranker Mission Patch">' if B64_LOGO else ""
+logo_html = f'<img src="data:image/jpeg;base64,{B64_LOGO}" class="main-header-logo" alt="SubZero Mission Patch">' if B64_LOGO else ""
 st.html(
     '<div class="header-banner">'
     f'{logo_html}'
     '<div class="header-titles">'
-    '<div class="eyebrow">Planetary Analog Ranker</div>'
+    '<div class="eyebrow"><span class="subzero-tag">SUBZERO</span> Planetary Analog Ranker</div>'
     f'<h1 class="page-title">{target} analog sites.</h1>'
     f'<p class="page-sub">{target_subtitle}</p>'
     '</div></div>'
@@ -1538,7 +1554,7 @@ f"{stab_choice.lower()} sites for {target}"
 # ---------------------------------------------------------
 st.write("")
 st.markdown(
-    "<div class='footer'>Planetary Analog Ranker. Prototype built for the NASA Space Apps Challenge 2026. "
+    "<div class='footer'><strong>SubZero</strong> &middot; Planetary Analog Ranker. Prototype built for the NASA Space Apps Challenge 2026. "
     "Not an official NASA product. Site scores combine open climate and elevation data with estimates from published literature.</div>",
     unsafe_allow_html=True,
 )
