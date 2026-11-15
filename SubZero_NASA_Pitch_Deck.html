@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubZero | NASA Space Apps Pitch Deck</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0B132B;
+            --card: #121C34;
+            --card-border: #223458;
+            --accent-blue: #0A84FF;
+            --accent-cyan: #00F5D4;
+            --accent-orange: #FF5A1F;
+            --text-title: #F5F5F7;
+            --text-body: #DCE1EB;
+            --text-muted: #8E9BAE;
+            --success: #34D399;
+            --danger: #F87171;
+        }
+        body {
+            background: #050811;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-body);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Slide Viewport */
+        .deck-container {
+            width: 100%;
+            max-width: 1280px;
+            aspect-ratio: 16 / 9;
+            background: var(--bg);
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 44px 56px 40px 56px;
+            display: none;
+            flex-direction: column;
+            background: var(--bg);
+        }
+        .slide.active {
+            display: flex;
+        }
+
+        /* Slide Header */
+        .slide-tag {
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 6px;
+        }
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-title);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+        .slide-sub {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            margin-bottom: 24px;
+        }
+
+        /* Reusable Card */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+
+        /* Slide Footer */
+        .slide-footer {
+            margin-top: auto;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .slide-footer strong {
+            color: var(--accent-blue);
+        }
+
+        /* Slide 1 Layout */
+        .s1-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 28px;
+            height: 100%;
+            align-items: center;
+        }
+        .patch-preview {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            border-radius: 50%;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 0 2px var(--card-border);
+            display: block;
+        }
+
+        /* Slide 2 3-Column Layout */
+        .s2-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 18px;
+            flex: 1;
+        }
+        .col-card {
+            display: flex;
+            flex-direction: column;
+        }
+        .col-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+        }
+        .col-card .sub-ex {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .check-list { list-style: none; margin-bottom: 12px; font-size: 0.88rem; line-height: 1.5; color: var(--success); }
+        .cross-list { list-style: none; font-size: 0.88rem; line-height: 1.5; color: var(--danger); margin-top: auto; }
+
+        /* Slide 3 Layout */
+        .s3-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1.4fr;
+            gap: 22px;
+            flex: 1;
+            align-items: center;
+        }
+        .feat-item {
+            margin-bottom: 14px;
+        }
+        .feat-item h4 {
+            font-size: 1.05rem;
+            margin-bottom: 3px;
+        }
+        .feat-item p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+        .dashboard-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Slide 4 4-Step Process */
+        .s4-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            flex: 1;
+        }
+        .step-num {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .step-title {
+            font-size: 1.15rem;
+            color: var(--text-title);
+            margin-bottom: 12px;
+        }
+        .step-body {
+            font-size: 0.88rem;
+            line-height: 1.45;
+            color: var(--text-body);
+        }
+
+        /* Slide 5 2x2 Grid */
+        .s5-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            flex: 1;
+        }
+        .data-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 4px; }
+        .data-sub { font-size: 0.9rem; font-weight: 600; color: var(--text-title); margin-bottom: 8px; }
+        .data-desc { font-size: 0.86rem; color: var(--text-body); line-height: 1.4; }
+
+        /* Slide 6 3 Impact Pillars */
+        .s6-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            flex: 1;
+        }
+
+        /* Slide 7 2-Column */
+        .s7-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 22px;
+            flex: 1;
+        }
+
+        /* Bottom Controls Bar */
+        .controls-bar {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .nav-btn {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            color: var(--text-title);
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+        .hint {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Print to PDF rules */
+        @media print {
+            body { background: white; }
+            .controls-bar { display: none; }
+            .deck-container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+                width: 100vw;
+                height: 100vh;
+            }
+            .slide {
+                display: flex !important;
+                page-break-after: always;
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="deck-container">
+        <!-- ==================== SLIDE 1 ==================== -->
+        <div class="slide active" id="slide-1">
+            <div class="s1-grid">
+                <div class="card" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <img src="assets/mission_patch.jpg" class="patch-preview" alt="SubZero Mission Patch">
+                    <div style="margin-top: 14px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-cyan);">OFFICIAL MISSION INSIGNIA</div>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column; justify-content: center;">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-cyan); letter-spacing: 0.08em; margin-bottom: 8px;">NASA SPACE APPS CHALLENGE 2026</div>
+                    <h1 style="font-size: 3.2rem; font-weight: 800; color: var(--text-title); line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px;">SUBZERO</h1>
+                    <h2 style="font-size: 1.45rem; font-weight: 700; color: var(--accent-blue); margin-bottom: 16px;">Planetary Analog Ranker & Portfolio Optimizer</h2>
+                    <p style="font-size: 1.05rem; line-height: 1.45; color: var(--text-body); margin-bottom: 24px;">
+                        A scientific decision-support engine matching Earth testing terrains to Artemis Lunar South Pole & Mars surface environments.
+                    </p>
+                    <div style="background: rgba(10, 132, 255, 0.08); border: 1px solid rgba(10, 132, 255, 0.25); border-radius: 8px; padding: 12px 16px;">
+                        <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 6px;">PROJECT & ACCESS DETAILS:</div>
+                        <div style="font-size: 0.9rem; margin-bottom: 4px;"><strong>Team Name:</strong> SubZero</div>
+                        <div style="font-size: 0.9rem; margin-bottom: 4px;"><strong>Live Prototype:</strong> <a href="https://subzero.streamlit.app/" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">https://subzero.streamlit.app/</a></div>
+                        <div style="font-size: 0.9rem;"><strong>Open Code:</strong> github.com/obaid404notfound/planetary-analog-ranker</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 1 of 7</strong>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 2 ==================== -->
+        <div class="slide" id="slide-2">
+            <div class="slide-tag">Challenge Context & Critical Bottleneck</div>
+            <h2 class="slide-title">Why Planetary Analog Selection Fails Today</h2>
+            <div class="slide-sub">Hardware failure on the Moon or Mars is catastrophic. Testing on Earth is essential, but flawed.</div>
+            
+            <div class="s2-grid">
+                <div class="card col-card">
+                    <h3 style="color: var(--accent-cyan);">POLAR DEEP-FREEZE</h3>
+                    <div class="sub-ex">e.g., Concordia Station, McMurdo</div>
+                    <ul class="check-list">
+                        <li>✓ Cryogenic cold (-80°C cold traps)</li>
+                        <li>✓ Low grazing polar illumination</li>
+                        <li>✓ Extreme crew isolation & confinement</li>
+                    </ul>
+                    <ul class="cross-list">
+                        <li>✗ Missing basaltic rock & regolith</li>
+                        <li>✗ Missing volcanic lava tubes</li>
+                        <li>✗ Thick ice sheet masks surface geology</li>
+                    </ul>
+                </div>
+                <div class="card col-card">
+                    <h3 style="color: var(--accent-orange);">VOLCANIC BASALT</h3>
+                    <div class="sub-ex">e.g., Askja (Iceland), Mauna Kea</div>
+                    <ul class="check-list">
+                        <li>✓ Authentic basaltic mineral regolith</li>
+                        <li>✓ Underground lava tube caverns</li>
+                        <li>✓ Cratered rover mobility obstacles</li>
+                    </ul>
+                    <ul class="cross-list">
+                        <li>✗ Above-freezing summer temperatures</li>
+                        <li>✗ High atmospheric humidity & rain</li>
+                        <li>✗ Standard 24-hr day/night cycle</li>
+                    </ul>
+                </div>
+                <div class="card col-card">
+                    <h3 style="color: var(--accent-blue);">HYPER-ARID DESERTS</h3>
+                    <div class="sub-ex">e.g., Atacama Desert, Namib</div>
+                    <ul class="check-list">
+                        <li>✓ Extreme aridity & zero precipitation</li>
+                        <li>✓ High UV radiation flux</li>
+                        <li>✓ Oxidized soil perchlorates & dust</li>
+                    </ul>
+                    <ul class="cross-list">
+                        <li>✗ Zero cryogenic freeze conditions</li>
+                        <li>✗ Standard Earth gravitational pull</li>
+                        <li>✗ High daytime surface heat</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 14px 20px;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 4px;">THE CORE BOTTLENECK:</div>
+                <div style="font-size: 0.95rem; line-height: 1.4;">
+                    No single Earth site replicates all target environments. Missions have historically selected analog sites based on subjective habit rather than empirical data—leaving dangerous hardware vulnerabilities undiscovered until launch.
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 2 of 7</strong>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 3 ==================== -->
+        <div class="slide" id="slide-3">
+            <div class="slide-tag">SubZero Solution & Software Platform</div>
+            <h2 class="slide-title">Empirical Planetary Analog Evaluation Engine</h2>
+            <div class="slide-sub">Transforms subjective expedition planning into a quantitative, multi-criteria decision pipeline.</div>
+
+            <div class="s3-grid">
+                <div class="card" style="height: 100%; display: flex; flex-direction: column; justify-content: space-around;">
+                    <div class="feat-item">
+                        <h4 style="color: var(--accent-cyan);">▶ 8 Multi-Criteria Dimensions</h4>
+                        <p>Scores slope roughness, cryogenic cold, UV radiation, regolith chemistry, diurnal swing, pressure, aridity, and darkness.</p>
+                    </div>
+                    <div class="feat-item">
+                        <h4 style="color: var(--accent-blue);">▶ Submodular Portfolio Finder</h4>
+                        <p>Greedy coverage optimization selects complementary 2–3 site teams to achieve 100% test requirement coverage.</p>
+                    </div>
+                    <div class="feat-item">
+                        <h4 style="color: var(--accent-orange);">▶ Dirichlet Stability Verification</h4>
+                        <p>Runs 1,000 Monte Carlo noise trials to prove candidate rankings withstand subjective weight shifts.</p>
+                    </div>
+                    <div class="feat-item">
+                        <h4 style="color: var(--success);">▶ 100% Open & Accessible</h4>
+                        <p>Deployed on Streamlit Cloud, ingesting real NASA satellite data with zero proprietary software dependencies.</p>
+                    </div>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <img src="assets/dashboard_screenshot.jpg" class="dashboard-img" alt="SubZero Dashboard">
+                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-cyan); margin-top: 10px;">
+                        SubZero Live Dashboard: Interactive Global Analog Map & Scientific Leaderboard
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 3 of 7</strong>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 4 ==================== -->
+        <div class="slide" id="slide-4">
+            <div class="slide-tag">Workflow & User Experience</div>
+            <h2 class="slide-title">Four Steps From Target to Optimal Test Portfolio</h2>
+            <div class="slide-sub">An intuitive decision workflow designed for flight mission planners, rover engineers, and scientists.</div>
+
+            <div class="s4-grid">
+                <div class="card" style="border-top: 4px solid var(--accent-cyan);">
+                    <div class="step-num" style="color: var(--accent-cyan);">STEP 01</div>
+                    <h3 class="step-title">Mission Setup</h3>
+                    <p class="step-body">Select target body (Moon South Pole vs. Mars) and choose operational mission presets (Rover Mobility, ISRU Drilling, or Human Habitat).</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--accent-blue);">
+                    <div class="step-num" style="color: var(--accent-blue);">STEP 02</div>
+                    <h3 class="step-title">Empirical Ranking</h3>
+                    <p class="step-body">SubZero scores 15 global candidate sites using min-max normalized physical metrics, automatically detecting statistical ties within 2%.</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--accent-orange);">
+                    <div class="step-num" style="color: var(--accent-orange);">STEP 03</div>
+                    <h3 class="step-title">Radar Profile Alignment</h3>
+                    <p class="step-body">Interactive side-by-side radar charts align Earth analog sites against measured planetary data (LRO Diviner, LOLA, Curiosity REMS).</p>
+                </div>
+                <div class="card" style="border-top: 4px solid var(--success);">
+                    <div class="step-num" style="color: var(--success);">STEP 04</div>
+                    <h3 class="step-title">Portfolio Optimization</h3>
+                    <p class="step-body">Submodular greedy solver outputs the optimal 2–3 site pairing that eliminates test blindspots and spotlights remaining gaps.</p>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 4 of 7</strong>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 5 ==================== -->
+        <div class="slide" id="slide-5">
+            <div class="slide-tag">Open Science Ingestion Pipeline</div>
+            <h2 class="slide-title">Powered by Real NASA Earth & Planetary Data</h2>
+            <div class="slide-sub">Ingests open space agency datasets—zero runtime API calls, reproducible offline data pipeline.</div>
+
+            <div class="s5-grid">
+                <div class="card" style="border-left: 4px solid var(--accent-cyan);">
+                    <div class="data-title" style="color: var(--accent-cyan);">NASA SRTM & ASTER GDEM</div>
+                    <div class="data-sub">Terrain Roughness & Elevation Variance</div>
+                    <div class="data-desc">Provides 30m digital elevation data across all candidate sites. SubZero calculates slope steepness and surface roughness to simulate rover trafficability on hazardous lunar/Martian regolith.</div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent-blue);">
+                    <div class="data-title" style="color: var(--accent-blue);">NASA POWER & CERES Radiometry</div>
+                    <div class="data-sub">Solar Irradiance & UV Exposure</div>
+                    <div class="data-desc">Supplies satellite-derived surface solar flux and UV radiation index data. Evaluates photovoltaic power generation testing and spacesuit polymer photodegradation.</div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent-orange);">
+                    <div class="data-title" style="color: var(--accent-orange);">NASA LRO (Diviner, LOLA, CRaTER)</div>
+                    <div class="data-sub">Artemis Lunar South Pole Baselines</div>
+                    <div class="data-desc">Calibrates planetary ground truth: -246°C cryogenic cold traps, low grazing polar illumination, and steep 12° Shackleton Crater rim topologies for Artemis landing simulation.</div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--success);">
+                    <div class="data-title" style="color: var(--success);">Curiosity REMS & MOLA Mars Data</div>
+                    <div class="data-sub">Martian Atmospheric & Thermal Swings</div>
+                    <div class="data-desc">Ingests Rover Environmental Monitoring Station diurnal temperature swings (90°C range), low surface atmospheric pressure, and Martian soil chemistry models.</div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 5 of 7</strong>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 6 ==================== -->
+        <div class="slide" id="slide-6">
+            <div class="slide-tag">Value to Spaceflight & Exploration</div>
+            <h2 class="slide-title">De-Risking Human & Robotic Planetary Missions</h2>
+            <div class="slide-sub">SubZero delivers immediate scientific and economic impact for agencies, commercial space, and academia.</div>
+
+            <div class="s6-grid">
+                <div class="card" style="display: flex; flex-direction: column;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 4px;">MISSION SAFETY</div>
+                    <h3 style="font-size: 1.25rem; color: var(--text-title); margin-bottom: 12px;">Preventing Hardware Failure</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.45; color: var(--text-body); margin-bottom: 16px;">
+                        Hardware tested against mismatched Earth terrain will fail on the Moon. SubZero guarantees that life-support systems, rovers, and spacesuits are tested against empirical extreme physics before launch.
+                    </p>
+                    <div style="margin-top: auto; font-size: 0.85rem; line-height: 1.6; color: var(--accent-cyan);">
+                        ✓ Authentic cryogenic deep freeze<br>
+                        ✓ Rover terrain obstacle validation<br>
+                        ✓ Protects astronauts and multimillion-dollar payloads
+                    </div>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-blue); margin-bottom: 4px;">ECONOMIC ROI</div>
+                    <h3 style="font-size: 1.25rem; color: var(--text-title); margin-bottom: 12px;">Saving Testing Budgets</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.45; color: var(--text-body); margin-bottom: 16px;">
+                        Field expeditions to Antarctica or the Arctic cost millions of dollars. SubZero's portfolio optimizer eliminates redundant expeditions and pinpoints minimal-cost site pairings.
+                    </p>
+                    <div style="margin-top: auto; font-size: 0.85rem; line-height: 1.6; color: var(--accent-blue);">
+                        ✓ Eliminates redundant expedition spend<br>
+                        ✓ 2-site portfolio achieves 88%+ coverage<br>
+                        ✓ Accounts for airport and logistics distance
+                    </div>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column;">
+                    <div style="font-size: 0.8rem; font-weight: 800; color: var(--success); margin-bottom: 4px;">OPEN SCIENCE</div>
+                    <h3 style="font-size: 1.25rem; color: var(--text-title); margin-bottom: 12px;">Democratizing Architecture</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.45; color: var(--text-body); margin-bottom: 16px;">
+                        Replaces closed, proprietary decision-making with transparent, reproducible open science accessible to emerging space nations, researchers, and university cubesat teams.
+                    </p>
+                    <div style="margin-top: auto; font-size: 0.85rem; line-height: 1.6; color: var(--success);">
+                        ✓ 100% open-source Python stack<br>
+                        ✓ Transparent mathematical formulas<br>
+                        ✓ Zero vendor lock-in or paid APIs
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 6 of 7</strong>
+            </div>
+        </div>
+
+        <!-- ==================== SLIDE 7 ==================== -->
+        <div class="slide" id="slide-7">
+            <div class="slide-tag">Future Vision & Verification</div>
+            <h2 class="slide-title">Roadmap, Open Access & Acknowledgments</h2>
+            <div class="slide-sub">SubZero is live, validated with 18 automated tests, and ready for deployment.</div>
+
+            <div class="s7-grid">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-around;">
+                    <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 6px;">FUTURE DEVELOPMENT ROADMAP:</div>
+                    <div class="feat-item">
+                        <h4 style="color: var(--accent-blue);">▶ Outer Planet Analogs</h4>
+                        <p>Expand catalog to evaluate icy moons—including Europa sub-ice analog testing (Lake Vostok) and Titan cryo-lake environments.</p>
+                    </div>
+                    <div class="feat-item">
+                        <h4 style="color: var(--accent-cyan);">▶ Live NASA PDS API Sync</h4>
+                        <p>Automate direct connection to NASA Planetary Data System for live ingestion of new rover and orbiter data streams.</p>
+                    </div>
+                    <div class="feat-item">
+                        <h4 style="color: var(--accent-orange);">▶ Soil Assay & Electrostatic Dust</h4>
+                        <p>Ingest perchlorate chemical assays and electrostatic dust levitation modeling for lunar dust mitigation testing.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 10px;">PROJECT LINKS & ACCESS:</div>
+                        <div style="font-size: 0.95rem; margin-bottom: 8px;"><strong>Live Streamlit App:</strong> <a href="https://subzero.streamlit.app/" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">https://subzero.streamlit.app/</a></div>
+                        <div style="font-size: 0.95rem; margin-bottom: 8px; color: var(--text-muted);"><strong>GitHub Repository:</strong> github.com/obaid404notfound/planetary-analog-ranker</div>
+                        <div style="font-size: 0.95rem; color: var(--success);"><strong>Automated Tests:</strong> 18/18 Unit & UI Integration Tests Passing</div>
+                    </div>
+                    <div style="background: rgba(255, 90, 31, 0.08); border: 1px solid rgba(255, 90, 31, 0.25); border-radius: 8px; padding: 12px 16px; margin-top: 14px;">
+                        <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-orange); margin-bottom: 4px;">SPECIAL THANKS:</div>
+                        <div style="font-size: 0.85rem; line-height: 1.4; color: var(--text-body);">
+                            Thank you to the NASA Space Apps Challenge 2026 organizers, evaluators, and the open planetary science community for making these datasets universally accessible.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span>SubZero | NASA Space Apps Challenge 2026</span>
+                <strong>Slide 7 of 7</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="controls-bar">
+        <button class="nav-btn" onclick="prevSlide()">◀ Previous</button>
+        <span id="slide-indicator" style="font-weight: 700; color: var(--text-title); font-size: 0.95rem;">Slide 1 of 7</span>
+        <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
+        <button class="nav-btn" onclick="window.print()" style="background: var(--accent-cyan); color: #0B132B; font-weight: 800;">Print to PDF 🖨️</button>
+        <span class="hint">Use <strong>Left / Right Arrow</strong> or <strong>Space</strong> to navigate. Press <strong>Ctrl + P</strong> to save as PDF.</span>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 7;
+
+        function showSlide(n) {
+            if (n < 1) n = 1;
+            if (n > totalSlides) n = totalSlides;
+            currentSlide = n;
+
+            for (let i = 1; i <= totalSlides; i++) {
+                const s = document.getElementById('slide-' + i);
+                if (s) s.classList.toggle('active', i === currentSlide);
+            }
+            document.getElementById('slide-indicator').textContent = `Slide ${currentSlide} of ${totalSlides}`;
+        }
+
+        function prevSlide() { showSlide(currentSlide - 1); }
+        function nextSlide() { showSlide(currentSlide + 1); }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
