@@ -8,3 +8,5 @@ dist/
 build/
 .DS_Store
 data/.cache/
+cookies.txt
+*.cookie

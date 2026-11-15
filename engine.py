@@ -7,7 +7,7 @@ Implements:
 4. Radar Comparison (criterion-by-criterion target alignment)
 """
 
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 import numpy as np
 import pandas as pd
 
@@ -48,7 +48,7 @@ def portfolio(
     weights: Dict[str, float], 
     k: int = 3, 
     thr: float = 70.0
-) -> Tuple[List[any], Dict[str, float], List[str]]:
+) -> Tuple[List[Any], Dict[str, float], List[str]]:
     """
     Analog Portfolio Finder (top pick).
     Greedy rule: pick the best site, then repeatedly add the site whose weighted
@@ -70,7 +70,7 @@ def portfolio(
     w_sum = w.sum()
     norm_w = {c: weights[c] / w_sum if w_sum > 0 else 1.0 / len(cols) for c in cols}
     
-    chosen: List[any] = []
+    chosen: List[Any] = []
     covered: Dict[str, float] = {c: 0.0 for c in cols}
     
     # In case k is greater than number of sites available
@@ -125,7 +125,7 @@ def rank_stability(
     return pd.Series(top_rate, index=df.index, name=f"top_{effective_top_n}_rate")
 
 
-def portfolio_value(df: pd.DataFrame, weights: Dict[str, float], chosen: List[any]) -> float:
+def portfolio_value(df: pd.DataFrame, weights: Dict[str, float], chosen: List[Any]) -> float:
     """Weighted coverage of a set of sites: best score per criterion, weighted and summed."""
     cols = list(weights.keys())
     w = np.array([weights[c] for c in cols], dtype=float)
@@ -139,7 +139,7 @@ def best_portfolio(
     weights: Dict[str, float],
     k: int = 3,
     thr: float = 70.0,
-) -> Tuple[List[any], Dict[str, float], List[str], float]:
+) -> Tuple[List[Any], Dict[str, float], List[str], float]:
     """
     True optimum: try every combination of k sites and keep the one with the highest
     weighted coverage. With ~15 sites and k <= 3 that is at most a few hundred

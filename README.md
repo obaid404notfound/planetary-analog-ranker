@@ -9,7 +9,7 @@
 [![Streamlit App](https://img.shields.io/badge/Streamlit-1.67+-FF4B4B.svg)](https://streamlit.io/)
 [![Folium](https://img.shields.io/badge/Geospatial-Folium-brightgreen.svg)](https://python-visualization.github.io/folium/)
 [![Plotly](https://img.shields.io/badge/Charts-Plotly-3F4F75.svg)](https://plotly.com/)
-[![Tests](https://img.shields.io/badge/Tests-8%20passing-success.svg)](./tests)
+[![Tests](https://img.shields.io/badge/Tests-18%20passing-success.svg)](./tests)
 
 ---
 
@@ -183,16 +183,32 @@ The repository includes quantitative characterization and physical observation n
 
 ## Benchmark Calibration Verification
 
-Live scoring verifies that known NASA and ESA analog grounds land in accordance with physical theory:
+The platform supports two evaluation modes: **Measured Physical Data** (the app's default mode, driven by continuous open climate, elevation, and infrastructure datasets) and **Expert Literature Estimates**. Live scoring confirms that established NASA and ESA testing grounds rank in close alignment with physical planetary science:
 
-| Known Analog | Planetary Target | Score | Rank | Physical Reality Check |
+### 1. Measured Physical Data Mode (App Default)
+*In Measured mode, seven of eight Moon criteria and four of eight Mars criteria are computed directly from open datasets (ERA5 reanalysis, NASA POWER CERES UV, NASA SRTM 30m / ASTER GDEM relief, and OpenStreetMap).*
+
+| Candidate Site | Planetary Target | Measured Score | Rank (Candidates) | Physical Ground-Truth Finding |
 | :--- | :--- | :---: | :---: | :--- |
-| **McMurdo Dry Valleys** | Moon South Pole | **82.8** | **1** | Exceptional cryogenic & aridity match; penalized only by logistics |
-| **Haughton Impact Crater** | Moon South Pole | **79.3** | **2** | Genuine meteorite impact structure combined with polar cold |
-| **Atacama Desert** | Moon South Pole | **70.6** | **6 (tied)** | High UV/aridity, but accurately penalized for lack of polar cold |
-| **Atacama Desert** | Mars | **84.0** | **1** | Unequalled soil chemistry, perchlorates, extreme dryness & UV |
-| **McMurdo Dry Valleys** | Mars | **82.3** | **2** | Cryogenic ground ice and polar desiccated sandstone |
-| **Haughton Impact Crater** | Mars | **75.2** | **6** | Peak impact crater features (98/100); moderate basalt & salts |
+| **Concordia Station (Dome C)** | Moon South Pole | **66.9** | **1** | Coldest $-68.4^\circ\text{C}$ winter reanalysis temperatures & extreme polar aridity; holds 1st in 88.6% of noise trials |
+| **McMurdo Dry Valleys** | Moon South Pole | **64.9** | **2** | Exceptional cryogenic aridity; narrow statistical tie with Concordia (wins 10.1% of noise trials) |
+| **Atacama Desert (Yungay)** | Moon South Pole | **64.2** | **3** | Peak solar UV and desiccated surface; lacks high-latitude polar cold |
+| **Haughton Impact Crater** | Moon South Pole | **61.7** | **4** | Arctic permafrost combined with verified impact shatter topography |
+| **Atacama Desert (Yungay)** | Mars | **73.4** | **1** | Global leader in hyper-aridity, UV flux, and perchlorate soil chemistry |
+| **Haughton Impact Crater** | Mars | **62.5** | **4** | Peak impact crater terrain (98/100) and polar desert gravels |
+| **McMurdo Dry Valleys** | Mars | **62.3** | **6** | Desiccated sandstone and cryogenic ground ice; penalized by remote Antarctic logistics |
+
+### 2. Expert Estimates Mode (Literature Baseline)
+*In Estimates mode, criteria reflect initial normalized suitability values curated from published analog expedition reports:*
+
+| Known Analog | Planetary Target | Literature Score | Rank | Physical Reality Check |
+| :--- | :--- | :---: | :---: | :--- |
+| **McMurdo Dry Valleys** | Moon South Pole | **82.8** | **1** | Polar cold desert benchmark; penalized only by remote logistics |
+| **Haughton Impact Crater** | Moon South Pole | **79.3** | **2** | 23-km meteorite crater in permafrost mimicking complex lunar topography |
+| **Atacama Desert** | Moon South Pole | **70.6** | **8** | Extreme UV and dryness, but accurately penalized for temperate latitude |
+| **Atacama Desert** | Mars | **84.0** | **1** | Unequalled soil chemistry, perchlorate oxidants, and extreme dryness |
+| **McMurdo Dry Valleys** | Mars | **82.3** | **2** | Sub-zero desiccated regolith and polygon permafrost ground ice |
+| **Haughton Impact Crater** | Mars | **75.2** | **6** | Impact melt sheets, deep gullies, and shatter cone geology |
 
 ---
 
@@ -240,15 +256,41 @@ The app opens at http://localhost:8501.
 
 ---
 
-## 2.5-Minute Demo Video Script Outline
+## Project Demo Outlines
+
+### A. Official NASA Fast Pitch (30 Seconds or Less)
+*Adheres to the official 2026 NASA Space Apps 30-second video limit for Global Judging eligibility:*
+
+| Timestamp | Section | Key Visuals & Talking Points |
+| :--- | :--- | :--- |
+| **0:00 – 0:05** | **Introduction** | *"We are team [Name], presenting the Planetary Analog Ranker & Portfolio Optimizer."* Show mission patch and dashboard. |
+| **0:05 – 0:12** | **The Bottleneck** | *"Testing Artemis and Mars equipment across mismatched Earth environments risks catastrophic mission failure."* |
+| **0:12 – 0:22** | **The Engine & Optimization** | *"Our platform ingests NASA SRTM, CERES, and ERA5 data to score sites across 8 planetary criteria, then uses submodular greedy optimization to select complementary multi-site test portfolios that eliminate critical test gaps."* Show live map & Tab 3 portfolio solver. |
+| **0:22 – 0:30** | **Validation & Impact** | *"Backed by 1,000 Dirichlet Monte Carlo simulations, we're replacing subjective expedition planning with data-driven science."* |
+
+### B. Extended 2.5-Minute Video Walkthrough Script
 
 | Timestamp | Section | Key Talking Points & Visual Actions |
 | :--- | :--- | :--- |
 | **0:00 – 0:20** | **The Problem** | *"No single Earth site is a perfect analog for the Moon or Mars. Testing rovers and habitats across mismatched sites risks mission failure."* Show dashboard and prototype banner. |
 | **0:20 – 1:00** | **The Ranked Map** | Toggle between Moon South Pole and Mars. Switch to **Rover mobility** preset; watch sliders and map update. Click markers to reveal top parameter values and constraints. |
 | **1:00 – 1:35** | **Portfolio Finder** | Open Tab 3. Set $k=2$ and $thr=85$; observe remaining gaps (e.g. Topographic complexity). Increase $k$ to $3$; observe how Askja or Mauna Kea closes the gap. Review tailored gap advice. |
-| **1:35 – 2:05** | **Validation** | Show Tab 4. Select the **Top 3** cutoff to show sharp separation. Walk through the live-generated calibration findings. |
+| **1:35 – 2:05** | **Validation** | Show Tab 4. Select the **Top 3** cutoff to show sharp separation. Walk through the live-generated calibration findings and open data agreement matrix. |
 | **2:05 – 2:30** | **Radar & Roadmap** | Inspect a site's radar profile against measured planetary physical data (LRO/MOLA). Point to the NASA Earth Observation data provenance table and outline automated raster ingestion next steps. |
+
+---
+
+## References & Key Literature
+
+1. **Lunar South Pole Thermal Environment**: Paige, D. A., et al. (2010). *Diviner Lunar Radiometer Experiment: Thermal environment of the Lunar South Pole.* Science, 330(6003), 479-482.
+2. **Lunar Surface Topography & Slopes**: Barker, M. K., et al. (2016). *A new lunar digital elevation model from the Lunar Orbiter Laser Altimeter (LOLA).* Icarus, 273, 346-355.
+3. **Mars Diurnal Surface Meteorology**: Harri, A. M., et al. (2014). *Pressure and temperature measurements at the Curiosity landing site by REMS.* Journal of Geophysical Research: Planets, 119(1), 82-92.
+4. **Global Atmospheric Reanalysis**: Hersbach, H., et al. (2020). *The ERA5 global reanalysis.* Quarterly Journal of the Royal Meteorological Society, 146(730), 1999-2049.
+5. **Solar Radiation & UV Climatology**: Stackhouse, P. W., et al. (2021). *NASA Prediction of Worldwide Energy Resources (POWER) Project.* NASA Langley Research Center.
+6. **Digital Elevation Models**: Farr, T. G., et al. (2007). *The Shuttle Radar Topography Mission (SRTM).* Reviews of Geophysics, 45(2).
+7. **Atacama Mars Analog Astrobiology**: Navarro-González, R., et al. (2003). *Mars-like soils in the Atacama Desert, Chile, and the dry limit of microbial life.* Science, 302(5647), 1018-1021.
+8. **Haughton-Mars Project Analog**: Lee, P., & Osinski, G. R. (2005). *The Haughton-Mars Project: Arctic Mars analog field research.* Lunar and Planetary Institute Contributions.
+9. **Antarctic Dry Valleys Analog Research**: McKay, C. P., et al. (1998). *Cold desert ecosystems: Antarctic Dry Valleys as an analog for Mars.* Antarctic Science, 10(2), 127-133.
 
 ---
 
